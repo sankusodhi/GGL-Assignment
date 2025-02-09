@@ -9,15 +9,11 @@ const UsersPage = () => {
     { id: 2, name: 'Saru', email: 'saru@example.com' },
   ]);
   const [newUser, setNewUser] = useState({ name: '', email: '' });
-  const [showList, setShowList] = useState(true); // ✅ State to toggle user list
-
-  // Handle input change
+  const [showList, setShowList] = useState(true); 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setNewUser({ ...newUser, [name]: value });
   };
-
-  // Handle form submit
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const userWithId = { ...newUser, id: users.length + 1 };
@@ -28,8 +24,6 @@ const UsersPage = () => {
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
       <Grid container spacing={4}>
-        
-        {/* ✅ User List Section */}
         <Grid item xs={12} md={6}>
           <Paper sx={{ p: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', boxShadow: 3 }}>
             <Typography variant="h6" gutterBottom>
@@ -54,8 +48,6 @@ const UsersPage = () => {
             )}
           </Paper>
         </Grid>
-
-        {/* ✅ Add New User Section */}
         <Grid item xs={12} md={6}>
           <Paper sx={{ p: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', boxShadow: 3 }}>
             <Typography variant="h6" gutterBottom>
