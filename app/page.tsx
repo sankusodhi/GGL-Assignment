@@ -1,101 +1,184 @@
-import Image from "next/image";
+// 'use client';
+// import Link from "next/link";
+// import { Button, Container, Typography, AppBar, Toolbar, IconButton, Menu, MenuItem } from "@mui/material";
+// import MenuIcon from "@mui/icons-material/Menu";
+// import { useState } from "react";
+
+// export default function Home() {
+//   const [anchorEl, setAnchorEl] = useState(null);
+
+//   const handleMenuOpen = (event) => {
+//     setAnchorEl(event.currentTarget);
+//   };
+
+//   const handleMenuClose = () => {
+//     setAnchorEl(null);
+//   };
+
+//   return (
+//     <>
+//       <AppBar position="static" color="primary" sx={{ width: "100%" }}>
+//         <Toolbar>
+//           <Typography variant="h6" sx={{ flexGrow: 1 }}>
+//             User Management
+//           </Typography>
+//           <IconButton
+//             edge="end"
+//             color="inherit"
+//             aria-label="menu"
+//             sx={{ display: { xs: "block", sm: "none" } }}
+//             onClick={handleMenuOpen}
+//           >
+//             <MenuIcon />
+//           </IconButton>
+//           <Menu
+//             anchorEl={anchorEl}
+//             open={Boolean(anchorEl)}
+//             onClose={handleMenuClose}
+//             sx={{ display: { xs: "block", sm: "none" } }}
+//           >
+//             <MenuItem component={Link} href="/" onClick={handleMenuClose}>
+//               Home
+//             </MenuItem>
+//             <MenuItem component={Link} href="/contact" onClick={handleMenuClose}>
+//               Contact
+//             </MenuItem>
+//             <MenuItem component={Link} href="/get-started" onClick={handleMenuClose}>
+//               Get Started
+//             </MenuItem>
+//           </Menu>
+//           <Button color="inherit" component={Link} href="/" sx={{ display: { xs: "none", sm: "block" } }}>
+//             Home
+//           </Button>
+//           <Button color="inherit" component={Link} href="/contact" sx={{ display: { xs: "none", sm: "block" } }}>
+//             Contact
+//           </Button>
+//           <Button color="inherit" component={Link} href="/get-started" sx={{ display: { xs: "none", sm: "block" } }}>
+//             Get Started
+//           </Button>
+//         </Toolbar>
+//       </AppBar>
+
+//       <Container maxWidth="xl" sx={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+//         <Typography variant="h4" component="h1" gutterBottom sx={{ mt: 4, textAlign: "center" }}>
+//           Welcome to User Management
+//         </Typography>
+//         <Button component={Link} href="/users" variant="contained" sx={{ width: { xs: "100%", sm: "auto" }, mt: 2 }}>
+//           Go to Users
+//         </Button>
+//       </Container>
+//     </>
+//   );
+// }
+
+'use client';
+import Link from "next/link";
+import { useState } from "react";
+import { Button, Container, Typography, AppBar, Toolbar, IconButton, Menu, MenuItem, Dialog, DialogTitle, DialogContent, TextField, DialogActions } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [openContact, setOpenContact] = useState(false);
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  // Navbar Menu Handlers
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  // Contact Form Handlers
+  const handleContactOpen = () => {
+    setOpenContact(true);
+  };
+  const handleContactClose = () => {
+    setOpenContact(false);
+  };
+
+  // Form Handling
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Form Submitted:", formData);
+    alert("Thank you for contacting us!");
+    setFormData({ name: "", email: "", message: "" });
+    setOpenContact(false);
+  };
+
+  return (
+    <>
+      <AppBar position="static" color="primary" sx={{ width: "100%" }}>
+        <Toolbar>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            User Management
+          </Typography>
+          <IconButton
+            edge="end"
+            color="inherit"
+            aria-label="menu"
+            sx={{ display: { xs: "block", sm: "none" } }}
+            onClick={handleMenuOpen}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <MenuIcon />
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+            sx={{ display: { xs: "block", sm: "none" } }}
           >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+            <MenuItem component={Link} href="/" onClick={handleMenuClose}>
+              Home
+            </MenuItem>
+            <MenuItem onClick={() => { handleMenuClose(); handleContactOpen(); }}>
+              Contact
+            </MenuItem>
+            <MenuItem component={Link} href="/get-started" onClick={handleMenuClose}>
+              Get Started
+            </MenuItem>
+          </Menu>
+          <Button color="inherit" component={Link} href="/" sx={{ display: { xs: "none", sm: "block" } }}>
+            Home
+          </Button>
+          <Button color="inherit" onClick={handleContactOpen} sx={{ display: { xs: "none", sm: "block" } }}>
+            Contact
+          </Button>
+          <Button color="inherit" component={Link} href="/get-started" sx={{ display: { xs: "none", sm: "block" } }}>
+            Get Started
+          </Button>
+        </Toolbar>
+      </AppBar>
+
+      <Container maxWidth="xl" sx={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+        <Typography variant="h4" component="h1" gutterBottom sx={{ mt: 4, textAlign: "center" }}>
+          Welcome to User Management
+        </Typography>
+        <Button component={Link} href="/users" variant="contained" sx={{ width: { xs: "100%", sm: "auto" }, mt: 2 }}>
+          Go to Users
+        </Button>
+      </Container>
+
+      {/* Contact Form Dialog */}
+      <Dialog open={openContact} onClose={handleContactClose} maxWidth="sm" fullWidth>
+        <DialogTitle>Contact Us</DialogTitle>
+        <DialogContent>
+          <form onSubmit={handleSubmit}>
+            <TextField label="Name" name="name" fullWidth margin="normal" required value={formData.name} onChange={handleChange} />
+            <TextField label="Email" name="email" type="email" fullWidth margin="normal" required value={formData.email} onChange={handleChange} />
+            <TextField label="Message" name="message" multiline rows={4} fullWidth margin="normal" required value={formData.message} onChange={handleChange} />
+            <DialogActions>
+              <Button onClick={handleContactClose} color="secondary">Cancel</Button>
+              <Button type="submit" variant="contained" color="primary">Submit</Button>
+            </DialogActions>
+          </form>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
