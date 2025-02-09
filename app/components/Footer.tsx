@@ -1,6 +1,7 @@
 
 "use client";
-import { Typography, Paper } from "@mui/material";
+import React from "react";
+import { Paper } from "@mui/material";
 import { useEffect, useState } from "react";
 
 export default function Footer() {
