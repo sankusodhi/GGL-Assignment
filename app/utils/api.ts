@@ -1,4 +1,10 @@
 
+type User = {
+  id?: number; 
+  name: string;
+  email: string;
+};
+
 export const submitUser = async (user: User) => {
   try {
     const response = await fetch('/api/users', {

@@ -1,5 +1,5 @@
 
-import { NextResponse } from 'next';
+import { NextResponse } from "next/server";
 
 const users = [
   { id: 1, name: 'John Doe', email: 'john@example.com' },
